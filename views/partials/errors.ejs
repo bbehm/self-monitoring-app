@@ -1,0 +1,7 @@
+<ul>
+    <% Object.keys(errors).forEach((attribute) => { %>
+        <% Object.values(errors[attribute]).forEach((err) => { %>
+            <li><%= err %></li>
+        <% }); %>
+    <% }); %>
+</ul>

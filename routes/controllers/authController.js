@@ -62,4 +62,10 @@ const postRegisterPage = async({request, response}) => {
 	response.redirect('/login');
 }
 
-export{ loginPage, postLoginPage, registerPage, postRegisterPage };
+const logOut = async({response, session}) => {
+	await session.set('user', undefined);
+	await session.set('authenticated', undefined);
+	response.redirect('/login');
+}
+
+export{ loginPage, postLoginPage, registerPage, postRegisterPage, logOut };

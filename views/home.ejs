@@ -1,0 +1,19 @@
+<%- include('./partials/loggedInMenu.ejs') , {user: user} %>
+<ul>
+    <li>
+        <a href="/user/reporting/morning">
+            Morning
+            <% if(morning){ %>
+            ( done )
+            <% } %>
+        </a>
+    </li>
+    <li>
+        <a href="/user/reporting/evening">
+            Evening
+            <% if(evening){ %>
+            ( done )
+            <% } %>
+        </a>
+    </li>
+</ul>

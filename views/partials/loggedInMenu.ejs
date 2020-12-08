@@ -1,0 +1,13 @@
+<%- include('./header.ejs') %>
+<ul class="navbar">
+    <li><a href="/user/reporting">Reporting</a></li>
+    <li><a href="/user/summary">Summary</a></li>
+    <li>
+        <div>
+            <p class="logout-text">Logged in as: <%= user.email %></p>
+            <form method="POST" action="/auth/logout" >
+                <input type="submit" value="logout" />
+            </form>
+        </div>
+    </li>
+</ul>

@@ -1,4 +1,5 @@
-import { getDailyReport } from "../../services/dataServices.js";
+import { getDailyReport, updateMorningReport, addMorningReport, updateEveningReport, addEveningReport } from "../../services/dataServices.js";
+import { validateMorning, validateEvening } from '../../middlewares/validations.js';
 
 const homePage = async({ session, render, response }) => {
 	const user = await session.get('user');
@@ -35,6 +36,7 @@ const reportMorning = async({session, render}) => {
 	}
 	if (!dailyReport) {
 		render('morning.ejs', data);
+		return;
 	}
 	const morningData = {
 		user: user,
@@ -47,6 +49,31 @@ const reportMorning = async({session, render}) => {
 		errors: {}
 	}
 	render('morning.ejs', morningData)
+}
+
+const postMorning = async({session, request, response, render}) => {
+	const data = await validateMorning(request);
+	// check that logged in
+	const user = await session.get('user');
+	data.id = user.id;
+	if (data.errors) {
+		data.user = user;
+		const day = new Date();
+		const formatDate = day.toISOString().substring(0,10);
+		data.date = formatDate;
+		const dailyReport = await getDailyReport(formatDate, user.id);
+		data.morning = dailyReport && dailyReport.morning;
+		data.evening = dailyReport && dailyReport.evening;
+		render('morning.ejs', data);
+		return;
+	}
+	const report = await getDailyReport(data.date, user.id);
+	if (report) {
+		await updateMorningReport(data);
+	} else {
+		await addMorningReport(data);
+	}
+	response.redirect('./user/reporting');
 }
 
 const reportEvening = async({session, render}) => {
@@ -83,4 +110,28 @@ const reportEvening = async({session, render}) => {
 	render('evening.ejs', eveningData)
 }
 
-export { homePage, reportMorning, reportEvening };
+const postEvening = async({session, request, response, render}) => {
+	const data = await validateEvening(request);
+	const user = await session.get('user');
+	// check that users logged on
+	data.id = user.id;
+	if (data.errors) {
+		data.user = user;
+		const day = new Date();
+		data.date = day.toISOString().substring(0,10);
+		const dailyReport = getDailyReport(data.date, user.id);
+		data.morning = dailyReport && dailyReport.morning;
+		data.evening = dailyReport && dailyReport.evening;
+		render('evening.ejs', data);
+		return;
+	}
+	const report = await getDailyReport(data.date, user.id);
+	if(report) {
+		await updateEveningReport(data);
+	} else {
+		await addEveningReport(data);
+	}
+	response.redirect('./user/reporting');
+}
+
+export { homePage, reportMorning, reportEvening, postMorning, postEvening };

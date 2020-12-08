@@ -12,7 +12,7 @@
     </li>
 </ul>
 <div>
-	<form method="POST" action="user/reporting/evening">
+	<form method="POST" action="/user/reporting/evening">
 		<div>
 			<label for="date">Date</label>
 			<input id="date" type="date" name="date" value="<%= date %>" />
@@ -40,14 +40,14 @@
 			</div>
 		</div>
 		<div>
-			<label for="mood">Generic mood</label>
-			<div id="mood">
+			<label for="eveningMood">Generic mood</label>
+			<div id="eveningMood">
 				<% for (var i = 1; i <= 5; i++) { %>
                     <% if (eveningMood === i) { %>
-                        <input type="radio" id="mood-<%= i %>" name="mood" value="<%= i %>" checked required>
+                        <input type="radio" id="eveningMood-<%= i %>" name="eveningMood" value="<%= i %>" checked required>
                         <label for="<%= i %>"><%= i %></label>
                     <% } else { %>
-                        <input type="radio" id="mood-<%= i %>" name="mood" value="<%= i %>" required>
+                        <input type="radio" id="eveningMood-<%= i %>" name="eveningMood" value="<%= i %>" required>
                         <label for="<%= i %>"><%= i %></label>
                     <% } %>
                 <% } %>

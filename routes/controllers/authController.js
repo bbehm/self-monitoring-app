@@ -30,6 +30,7 @@ const postLoginPage = async({request, response, session}) => {
 		email: userObj.email
 	});
 	response.body = 'Authentication successful!';
+	response.redirect('/user/reporting');
 }
 
 const registerPage = async({render}) => {
@@ -58,6 +59,7 @@ const postRegisterPage = async({request, response}) => {
 	const hash = await bcrypt.hash(password);
 	addUser(email, hash);
 	response.body = 'Registration successful!';
+	response.redirect('/login');
 }
 
 export{ loginPage, postLoginPage, registerPage, postRegisterPage };

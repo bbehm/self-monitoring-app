@@ -1,0 +1,9 @@
+<%- include ('./partials/header.ejs') %>
+<h1>Create an account</h1>
+<form method="POST" action="/auth/register">
+    Email <input type="email" name="email" /><br/>
+    Password <input type="password" name="password" /><br/>
+    Confirm password <input type="password" name="verification" /><br/>
+    <input type="submit" value="Register" class="btn btn-primary" />
+</form>
+<%- include ('./partials/footer.ejs') %>

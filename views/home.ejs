@@ -1,10 +1,11 @@
 <%- include('./partials/loggedInMenu.ejs') , {user: user} %>
 <ul>
+    <h3>Today's reporting</h3>
     <li>
         <a href="/user/reporting/morning">
             Morning
             <% if(morning){ %>
-            ( done )
+            ✅
             <% } %>
         </a>
     </li>
@@ -12,8 +13,9 @@
         <a href="/user/reporting/evening">
             Evening
             <% if(evening){ %>
-            ( done )
+            ✅
             <% } %>
         </a>
     </li>
 </ul>
+<%- include('./partials/footer.ejs') %>

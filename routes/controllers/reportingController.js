@@ -8,13 +8,34 @@ const homePage = async({ session, render, response }) => {
 		response.redirect('/login');
 	}
 	const day = new Date();
+	const yesterday = new Date(day - 86400000);
 	const formatDate = day.toISOString().substring(0,10);
+	const formatYesterday = yesterday.toISOString().substring(0,10);
 	const dailyReport = await getDailyReport(formatDate, user.id);
+	const yesterdayReport = await getDailyReport(formatYesterday, user.id);
 	const data = {
 		user: user,
 		morning: dailyReport && dailyReport.morning,
-		evening: dailyReport && dailyReport.evening
+		evening: dailyReport && dailyReport.evening,
 	};
+	if (data.morning && data.evening) {
+		data.moodToday = (Number(dailyReport.morning + dailyReport.evening) / 2);
+	} else if (data.morning) {
+		data.moodToday = Number(dailyReport.morning);
+	} else if (data.evening) {
+		data.moodToday = Number(dailyReport.evening);
+	} else {
+		data.moodToday = 'No reported mood for today';
+	}
+	if (yesterdayReport.morning && yesterdayReport.evening) {
+		data.moodYesterday = (Number(yesterdayReport.morning + yesterdayReport.evening) / 2);
+	} else if (yesterdayReport.morning) {
+		data.moodYesterday = Number(yesterdayReport.morning);
+	} else if (yesterdayReport.evening) {
+		data.moodYesterday = Number(yesterdayReport.evening);
+	} else {
+		data.moodYesterday = 'No reported mood for yesterday';
+	}
 	render('home.ejs', data);
 }
 

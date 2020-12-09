@@ -1,5 +1,5 @@
 # Self Monitoring App
-A web app for self monitoring created as a final project for a course in Web Software Development at Aalto University. 
+A web app for self monitoring created as a final project for a course in Web Software Development at Aalto University. The app is deployed on Heroku and can be found [HERE](https://self-monitoring.herokuapp.com/).
 ### Usage
 - __Clone__ the repo and navigate to the root of the folder
 - To add your __database credentials__: add a `.env` file with your credentials

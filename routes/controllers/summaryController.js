@@ -1,28 +1,5 @@
 import { averageWeek, averageMonth } from '../../services/summaryServices.js';
-
-const weekNumber = (day) => {
-    day = new Date(Date.UTC(day.getUTCFullYear(), day.getMonth(), day.getDate()));
-    day.setUTCDate(day.getUTCDate() + 4 - (day.getUTCDay()||7));
-    var yearStart = new Date(Date.UTC(day.getUTCFullYear(),0,1));
-    var weekNo = Math.ceil(( ( (day - yearStart) / 86400000) + 1)/7);
-    return [day.getUTCFullYear(), weekNo];
-}
-
-const checkWeek = (week) => {
-	if (week.length > 1) {
-		return(week);
-	} else {
-		return(week > 9 ? week : "0" + week);
-	}
-}
-
-const checkMonth = (month) => {
-	if (month.length > 1) {
-		return(month);
-	} else {
-		return(month > 9 ? month : "0" + month);
-	}
-}
+import { weekNumber, getTheDate, checkWeek, checkMonth } from '../../utils/helpers.js';
 
 const summaryPage = async({session, render}) => {
 	const user = await session.get('user');
@@ -49,12 +26,62 @@ const summaryPage = async({session, render}) => {
 	}
 }
 
-const changeMonthView = async({}) => {
+const changeMonthView = async({request, session, render}) => {
+	const user = await session.get('user');
+	const body = request.body();
+	const params = await body.value;
+	const setMonth = params.get('month');
+	const year = Number(setMonth.substring(0,4));
+	const month = Number(setMonth.substring(5,7));
+	const endDate = new Date(year, month - 1, 8);
+	const week = weekNumber(endDate)[1];
 
+	const monthData = await averageMonth(user.id, month);
+	const weekData = await averageWeek(user.id, week);
+	
+	const formatWeek = checkWeek(week);
+	const formatMonth = checkMonth(month);
+
+	if (monthData) {
+		if (weekData) {
+			render('summary.ejs', {user: user, monthData: monthData, month: formatMonth, weekData: weekData, week: formatWeek});
+		} else {
+			render('summary.ejs', {user: user, monthData: monthData, month: formatMonth, weekData: [], week: formatWeek});
+		}
+	} else if (weekData) {
+		render('summary.ejs', {user: user, monthData: [], month: formatMonth, weekData: weekData, week: formatWeek});
+	} else {
+		render('summary.ejs', {user:user, monthData: [], month: formatMonth, weekData: [], week: formatWeek});
+	}	
 }
 
-const changeWeekView = async({}) => {
+const changeWeekView = async({request, session, render}) => {
+	const user = await session.get('user');
+	const body = request.body();
+	const params = await body.value;
+	const setWeek = params.get('week');
+	const year = Number(setWeek.substring(0,4));
+	const week = Number(setWeek.substring(6,8));
+	const weekStartDate = getTheDate(week, year);
+	const month = weekStartDate.getMonth() + 1;
+	
+	const monthData = await averageMonth(user.id, month);
+	const weekData = await averageWeek(user.id, week);
 
+	const formatWeek = checkWeek(week);
+	const formatMonth = checkMonth(month);
+
+	if (monthData) {
+		if (weekData) {
+			render('summary.ejs', {user: user, monthData: monthData, month: formatMonth, weekData: weekData, week: formatWeek});
+		} else {
+			render('summary.ejs', {user: user, monthData: monthData, month: formatMonth, weekData: [], week: formatWeek});
+		}
+	} else if (weekData) {
+		render('summary.ejs', {user: user, monthData: [], month: formatMonth, weekData: weekData, week: formatWeek});
+	} else {
+		render('summary.ejs', {user:user, monthData: [], month: formatMonth, weekData: [], week: formatWeek});
+	}
 }
 
 export { summaryPage, changeMonthView, changeWeekView };

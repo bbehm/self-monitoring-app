@@ -1,4 +1,4 @@
-import { getDailyReport, updateMorningReport, addMorningReport, updateEveningReport, addEveningReport } from "../../services/dataServices.js";
+import { getDailyReport, updateMorningReport, addMorningReport, updateEveningReport, addEveningReport, getCommunityDailyReport } from "../../services/dataServices.js";
 import { validateMorning, validateEvening } from '../../middlewares/validations.js';
 
 const homePage = async({ session, render, response }) => {
@@ -9,16 +9,23 @@ const homePage = async({ session, render, response }) => {
 	const formatYesterday = yesterday.toISOString().substring(0,10);
 	const dailyReport = await getDailyReport(formatDate, user.id);
 	const yesterdayReport = await getDailyReport(formatYesterday, user.id);
+	const communityDailyReport = await getCommunityDailyReport(formatDate);
+	const communityYesterdayReport = await getCommunityDailyReport(formatYesterday);
 	const data = {
 		user: user,
 		morning: dailyReport && dailyReport.morning,
 		evening: dailyReport && dailyReport.evening,
+		communityMorning: communityDailyReport && communityDailyReport.morning,
+		communityEvening: communityDailyReport && communityDailyReport.evening
 	};
 	const yesterdayData = {
 		user: user,
 		morning: yesterdayReport && yesterdayReport.morning,
-		evening: yesterdayReport && yesterdayReport.evening
+		evening: yesterdayReport && yesterdayReport.evening,
+		communityMorning: communityYesterdayReport && communityYesterdayReport.morning,
+		communityEvening: communityYesterdayReport && communityYesterdayReport.evening
 	};
+	//current user
 	if (data.morning && data.evening) {
 		data.moodToday = (Number(dailyReport.morning + dailyReport.evening) / 2);
 	} else if (data.morning) {
@@ -36,6 +43,25 @@ const homePage = async({ session, render, response }) => {
 		data.moodYesterday = Number(yesterdayReport.evening);
 	} else {
 		data.moodYesterday = 'No reported mood for yesterday';
+	}
+	//community
+	if (data.communityMorning && data.communityEvening) {
+		data.communityMoodToday = (Number(communityDailyReport.morning + communityDailyReport.evening) / 2);
+	} else if (data.communityMorning) {
+		data.communityMoodToday = Number(communityDailyReport.morning);
+	} else if (data.communityEvening) {
+		data.communityMoodToday = Number(communityDailyReport.evening);
+	} else {
+		data.communityMoodToday = 'No reported mood for today';
+	}
+	if (yesterdayData.communityMorning && yesterdayData.communityEvening) {
+		data.communityMoodYesterday = (Number(communityYesterdayReport.morning + communityYesterdayReport.evening) / 2);
+	} else if (yesterdayData.communityMorning) {
+		data.communityMoodYesterday = Number(communityYesterdayReport.morning);
+	} else if (yesterdayData.communityEvening) {
+		data.communityMoodYesterday = Number(communityYesterdayReport.evening);
+	} else {
+		data.communityMoodYesterday = 'No reported mood for yesterday';
 	}
 	render('home.ejs', data);
 }

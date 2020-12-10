@@ -1,15 +1,23 @@
 <%- include('./partials/loggedInMenu.ejs') %>
 <div style="background-color: gray; opacity: 90%;"><br/><br/>
 	<div>
-		<form method="POST" action="/behavior/summary/month">
-			<div class="form-group d-flex justify-content-center">
-				<input type="month" id="month" name="month" /><br/>
-				<input class="btn btn-outline-dark" type="submit" value="Change month" />
+		<h3 style="text-align: center; color: white;">Here's a summary of your behavior</h3><br>
+		<div class="mx-auto" style="width: 50%;">
+			<h3 style="text-align: center; color: #2E3338;">Monthly Average</h3><br>
+		<form class="form-horizontal" method="POST" action="/behavior/summary/month">
+			<div class="form-group d-flex">
+				<div class="col-sm-8">
+					<input class="form-control" type="month" id="month" name="month" value="2020-<%= month %>" />
+				</div>
+				<div class="col-sm-8">
+					<input class="btn btn-outline-dark" type="submit" value="Change month" />
+				</div>
 			</div>
 		</form>
+	</div>
 		<div class="mx-auto" style="width: 79%;">
 		<% if (monthData.length > 0) { %>
-		<h6 style="text-align: center;">Showing data for month nr <%= monthData[0].month %></h6>
+		<h6 style="text-align: center; color: white;">Showing data for month <%= monthData[0].month %></h6>
 		<table class="table">
 			<thead><tr>
 				<th>Sleep Quality</th>
@@ -27,41 +35,48 @@
 			</tr></tbody>
 		</table>
 		<% } else { %>
-			<h6>No data for month <%= month %> 😞 </h6>
+			<h6 style="text-align: center;">No data for month <%= month %> yet 😞 </h6>
 		<% }; %>
 		</div>
 	</div>
 	<br>
 	<div>
-		<form method="POST" action="/behavior/summary/week">
-			<div class="form-group d-flex justify-content-center">
-				<input type="week" name="week" /><br/>
-				<input class="btn btn-outline-dark" type="submit" value="Change week" />
+		<div class="mx-auto" style="width: 50%;">
+			<h3 style="text-align: center; color: #2E3338;">Weekly Average</h3><br>
+		<form class="form-horizontal" method="POST" action="/behavior/summary/week">
+			<div class="form-group d-flex">
+				<div class="col-sm-8">
+					<input class="form-control" type="week" name="week" value="2020-W<%= week %>"/>
+				</div>
+				<div class="col-sm-8">
+					<input class="btn btn-outline-dark" type="submit" value="Change week" />
+				</div>
 			</div>
 		</form>
-		<div class="form-group d-flex justify-content-center">
+		</div>
+		<div class="mx-auto" style="width: 79%;">
 		<% if (weekData.length > 0) { %>
-		<h2>Showing data for week <%= weekData[0].month %></h2>
+		<h6 style="text-align: center; color: white;">Showing data for week <%= week %></h6>
 		<table class="table">
 			<thead><tr>
-				<th>Sleep Quality Weekly Average</th>
-				<th>Sleep Duration Weekly Average</th>
-				<th>Study Time Weekly Average</th>
-				<th>Exercise Time Weekly Average</th>
-				<th>Average Mood</th>
+				<th>Sleep Quality</th>
+				<th>Sleep Duration</th>
+				<th>Study Time</th>
+				<th>Exercise Time</th>
+				<th>Mood</th>
 			</tr></thead>
 			<tbody><tr>
-				<td><%= weekData[0].sleepQualityAvg %>/5.00</td>
-				<td><%= weekData[0].sleepDurationAvg %> hours</td>
-				<td><%= weekData[0].studyTimeAvg %> hours</td>
-				<td><%= weekData[0].exerciseAvg %> hours</td>
-				<td><%= weekData[0].moodAvg %>/5.00</td>
+				<td><%= weekData[0].sleepqualityavg %>/5.00</td>
+				<td><%= weekData[0].sleepdurationavg %> hours</td>
+				<td><%= weekData[0].studytimeavg %> hours</td>
+				<td><%= weekData[0].exerciseavg %> hours</td>
+				<td><%= weekData[0].moodavg %>/5.00</td>
 			</tr></tbody>
 		</table>
-	</div>
 		<% } else { %>
 			<h6>No data for week <%= week %> yet 😞 </h6>
 		<% }; %>
+		</div>
+		<br>
 	</div>
-</div>
 <%- include('./partials/footer.ejs') %>

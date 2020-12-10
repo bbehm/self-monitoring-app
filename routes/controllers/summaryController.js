@@ -64,13 +64,11 @@ const changeWeekView = async({request, session, render}) => {
 	const week = Number(setWeek.substring(6,8));
 	const weekStartDate = getTheDate(week, year);
 	const month = weekStartDate.getMonth() + 1;
-	
 	const monthData = await averageMonth(user.id, month);
 	const weekData = await averageWeek(user.id, week);
 
 	const formatWeek = checkWeek(week);
 	const formatMonth = checkMonth(month);
-
 	if (monthData) {
 		if (weekData) {
 			render('summary.ejs', {user: user, monthData: monthData, month: formatMonth, weekData: weekData, week: formatWeek});

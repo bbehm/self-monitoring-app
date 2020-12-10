@@ -8,6 +8,14 @@ const getDailyReport = async(date, id) => {
 	return ;
 }
 
+const getCommunityDailyReport = async(date) => {
+	const res = await executeQuery("SELECT * FROM user_reports WHERE date=$1;", date);
+	if(res && res.rowCount > 0) {
+		return res.rowsOfObjects()[0];
+	}
+	return ;
+}
+
 const updateMorningReport = async(data) => {
 	await executeQuery("UPDATE user_reports SET sleepDuration=$1, sleepQuality=$2, morning=$3 WHERE date=$4 AND user_id=$5;", data.sleepDuration, data.sleepQuality, data.morningMood, data.date, data.id);
 }
@@ -21,7 +29,7 @@ const updateEveningReport = async(data) => {
 }
 
 const addEveningReport = async(data) => {
-	await executeQuery("INSERT INTO user_reports (date, exerciseTime, studyTime, eating, evening, user_id) VALUES ($1, $2, $3, $4, $5, $6;", data.date, data.exerciseTime, data.studyTime, data.eating, data.eveningMood, data.id);
+	await executeQuery("INSERT INTO user_reports (date, exerciseTime, studyTime, eating, evening, user_id) VALUES ($1, $2, $3, $4, $5, $6);", data.date, data.exerciseTime, data.studyTime, data.eating, data.eveningMood, data.id);
 }
 
-export { getDailyReport, updateMorningReport, addMorningReport, updateEveningReport, addEveningReport };
+export { getDailyReport, updateMorningReport, addMorningReport, updateEveningReport, addEveningReport, getCommunityDailyReport };

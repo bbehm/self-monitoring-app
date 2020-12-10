@@ -22,22 +22,36 @@
     <h3>Your average mood lately<small class="text-light"> How have you been feeling?</small></h3>
 </div>
     <div class="mx-auto" style="width: 70%;">
-        <h5 class="mt-4" style="text-align: center;">Your general mood today: <span style="color: lightgray"><%= moodToday %></span></h5>
-        <h5 style="text-align: center;">Your general mood yesterday: <span style="color: lightgray"><%= moodYesterday %></span></h5>
+        <h5 class="mt-4" style="text-align: center;">Your mood today: <span style="color: lightgray"><%= moodToday %></span></h5>
+        <h5 style="text-align: center;">Your mood yesterday: <span style="color: lightgray"><%= moodYesterday %></span></h5>
     </div>
     <br>
     <div class="d-flex justify-content-center">
         <% if( moodToday > moodYesterday ) { %> 
-            <p>Things are looking bright today 👍 </p>
+            <h2>👍</h2>
         <% } else if (moodToday < moodYesterday) { %> 
-            <p>Things are looking gloomy today 😞 </p>
+            <h2>😞</h2>
         <% } else { %>
-            <p>Things are about the same as yesterday 😊 </p>
+            <p>😊</h2>
         <% } %>
     </div>
 <br>
 <div class="d-flex justify-content-center">
     <h3>Community averages<small class="text-light"> Check out how the rest of the community is doing!</small></h3>
+</div>
+<div class="mx-auto" style="width: 70%;">
+    <h5 class="mt-4" style="text-align: center;">Community average mood today: <span style="color: lightgray"><%= communityMoodToday %></span></h5>
+    <h5 style="text-align: center;">Community average mood yesterday: <span style="color: lightgray"><%= communityMoodYesterday %></span></h5>
+</div>
+<br>
+<div class="d-flex justify-content-center">
+    <% if( communityMoodToday > communityMoodYesterday ) { %> 
+        <h2>👍</h2>
+    <% } else if (communityMoodToday < communityMoodYesterday) { %> 
+        <h2>😞</h2>
+    <% } else { %>
+        <p>😊</h2>
+    <% } %>
 </div>
 <br>
 </div>

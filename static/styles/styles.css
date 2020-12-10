@@ -5,3 +5,9 @@ body {
 label {
 	color: white;
 }
+
+#register-heading {
+	margin-top: 40px;
+	color: lightgray;
+	text-align: center;
+}

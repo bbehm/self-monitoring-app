@@ -1,11 +1,31 @@
 <%- include ('./partials/header.ejs') %>
+<div class="mx-auto" style="width: 40%;">
 <br>
 <h1 style="text-align: center; color: white;">Login</h1>
-<div class="d-flex justify-content-center">
-<form method="POST" action="/auth/login">
-    <input type="email" name="email" placeholder="example@example.com" /><br/>
-    <input type="password" name="password" placeholder="password" /><br/>
-    <input class="btn btn-light" type="submit" value="Login" class="btn btn-primary" />
+<form class="form-horizontal" method="POST" action="/auth/login">
+    <div class="form-group">
+        <label for="email" class="col-sm-8 control-label">Email</label>
+        <div class="col-sm-12">
+            <input class="form-control" type="email" id="email" name="email" placeholder="example@example.com" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="password" class="col-sm-8 control-label">Password</label>
+        <div class="col-sm-12">
+            <input class="form-control" type="password" id="password" name="password" placeholder="password" />
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <input class="btn btn-secondary btn-lg btn-block" type="submit" value="Login" class="btn btn-primary" />
+    </div>
 </form>
+<br>
+<% if (errors) { %>
+    <%- include('./partials/errors.ejs', errors) %>
+<% } %>
+<div>
+    <h4 id="register-heading" >Don't have an account yet?</h4>
+    <form method="get" action="/auth/registration"><input class="btn btn-secondary btn-lg btn-block" type="submit" value="Register"></input></form>
+</div>
 </div>
 <%- include ('./partials/footer.ejs') %>

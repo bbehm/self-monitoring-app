@@ -22,12 +22,16 @@
             </div>
         </div>
         <div class="col-sm-12">
-            <input class="btn btn-light" type="submit" value="Register" class="btn btn-primary" />
+            <input class="btn btn-secondary btn-lg btn-block" type="submit" value="Register" class="btn btn-primary" />
         </div>
     </form>
     <br>
     <% if (errors) { %>
         <%- include('./partials/errors.ejs', errors) %>
     <% } %>
+    <div>
+        <h4 id="register-heading" >Already have an account?</h4>
+        <form method="get" action="/auth/login"><input class="btn btn-secondary btn-lg btn-block" type="submit" value="Login"></input></form>
+    </div>
 </div>
 <%- include ('./partials/footer.ejs') %>

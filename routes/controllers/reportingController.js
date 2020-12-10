@@ -18,6 +18,11 @@ const homePage = async({ session, render, response }) => {
 		morning: dailyReport && dailyReport.morning,
 		evening: dailyReport && dailyReport.evening,
 	};
+	const yesterdayData = {
+		user: user,
+		morning: yesterdayReport && yesterdayReport.morning,
+		evening: yesterdayReport && yesterdayReport.evening
+	};
 	if (data.morning && data.evening) {
 		data.moodToday = (Number(dailyReport.morning + dailyReport.evening) / 2);
 	} else if (data.morning) {
@@ -27,11 +32,11 @@ const homePage = async({ session, render, response }) => {
 	} else {
 		data.moodToday = 'No reported mood for today';
 	}
-	if (yesterdayReport.morning && yesterdayReport.evening) {
+	if (yesterdayData.morning && yesterdayData.evening) {
 		data.moodYesterday = (Number(yesterdayReport.morning + yesterdayReport.evening) / 2);
-	} else if (yesterdayReport.morning) {
+	} else if (yesterdayData.morning) {
 		data.moodYesterday = Number(yesterdayReport.morning);
-	} else if (yesterdayReport.evening) {
+	} else if (yesterdayData.evening) {
 		data.moodYesterday = Number(yesterdayReport.evening);
 	} else {
 		data.moodYesterday = 'No reported mood for yesterday';

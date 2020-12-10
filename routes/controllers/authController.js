@@ -3,10 +3,13 @@ import { bcrypt } from "../../deps.js";
 import { validateRegistration } from "../../middlewares/validations.js";
 
 const loginPage = async({render}) => {
-	render('login.ejs');
+	const data = {
+		errors: []
+	};
+	render('login.ejs', data);
 }
 
-const postLoginPage = async({request, response, session}) => {
+const postLoginPage = async({ request, response, session, render }) => {
 	const body = request.body();
 	const params = await body.value;
 	const email = params.get('email');
@@ -14,6 +17,12 @@ const postLoginPage = async({request, response, session}) => {
 	// check if the email exists in the database
 	const res = await getUserFromEmail(email);
 	if (res.rowCount === 0) {
+		const data = {
+			errors: {
+				error: { error: "Invalid email or password"}
+			}
+		};
+		render('login.ejs', data);
 		response.status = 401;
 		return;
 	}
@@ -22,6 +31,12 @@ const postLoginPage = async({request, response, session}) => {
 	const hash = userObj.password;  
 	const passwordCorrect = await bcrypt.compare(password, hash);
 	if (!passwordCorrect) {
+		const data = {
+			errors: {
+				error: { error: "Invalid email or password"}
+			}
+		};
+		render('login.ejs', data);
 		response.status = 401;
 		return;
 	}

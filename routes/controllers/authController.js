@@ -46,7 +46,7 @@ const postLoginPage = async({ request, response, session, render }) => {
 		email: userObj.email
 	});
 	response.body = 'Authentication successful!';
-	response.redirect('/user/reporting');
+	response.redirect('/behavior/reporting');
 }
 
 const registerPage = async({render}) => {

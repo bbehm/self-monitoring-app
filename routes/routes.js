@@ -13,15 +13,15 @@ router.get('/auth/registration', registerPage);
 router.post('/auth/registration', postRegisterPage);
 router.post('/auth/logout', logOut);
 
-router.get('/user/reporting', homePage);
-router.get('/user/reporting/morning', reportMorning);
-router.post('/user/reporting/morning', postMorning);
-router.get('/user/reporting/evening', reportEvening);
-router.post('/user/reporting/evening', postEvening);
+router.get('/behavior/reporting', homePage);
+router.get('/behavior/reporting/morning', reportMorning);
+router.post('/behavior/reporting/morning', postMorning);
+router.get('/behavior/reporting/evening', reportEvening);
+router.post('/behavior/reporting/evening', postEvening);
 
-router.get('/user/summary', summaryPage); //need to change
-router.post('/user/summary/week', changeWeekView);
-router.post('/user/summary/month', changeMonthView);
+router.get('/behavior/summary', summaryPage); //need to change
+router.post('/behavior/summary/week', changeWeekView);
+router.post('/behavior/summary/month', changeMonthView);
 
 
 export { router };

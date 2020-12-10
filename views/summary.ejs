@@ -1,7 +1,7 @@
 <%- include('./partials/loggedInMenu.ejs') %>
 <div style="background-color: gray; opacity: 90%;"><br/><br/>
 	<div>
-		<form method="POST" action="/user/summary/month">
+		<form method="POST" action="/behavior/summary/month">
 			<div class="form-group d-flex justify-content-center">
 				<input type="month" id="month" name="month" /><br/>
 				<input class="btn btn-outline-dark" type="submit" value="Change month" />
@@ -33,7 +33,7 @@
 	</div>
 	<br>
 	<div>
-		<form method="POST" action="/user/summary/week">
+		<form method="POST" action="/behavior/summary/week">
 			<div class="form-group d-flex justify-content-center">
 				<input type="week" name="week" /><br/>
 				<input class="btn btn-outline-dark" type="submit" value="Change week" />

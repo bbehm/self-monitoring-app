@@ -1,49 +1,31 @@
 <%- include('./partials/loggedInMenu.ejs') %>
 <div style="background-color: gray; opacity: 90%;"><br/><br/>
-	<form method="POST" action="/behavior/reporting/morning">
-		<div>
-			<label for="date">Date</label>
-			<input id="date" type="date" name="date" value="<%= date %>" />
-		</div>
-		<div>
-			<label for="sleepDuration">Sleep duration</label>
-			<input id="sleepDuration" type="number" name="sleepDuration" value="<%= sleepDuration %>" step="0.1" min="0" required />
-		</div>
-		<div>
-			<label for="sleepQuality">Sleep quality</label>
-			<div id="sleepQuality">
-				<% for (var i = 1; i <= 5; i++) { %>
-                    <% if (sleepQuality === i) { %>
-                        <input type="radio" id="quality-<%= i %>" name="sleepQuality" value="<%= i %>" checked required>
-                        <label for="<%= i %>"><%= i %></label>
-                    <% } else { %>
-                        <input type="radio" id="quality-<%= i %>" name="sleepQuality" value="<%= i %>" required>
-                        <label for="<%= i %>"><%= i %></label>
-                    <% } %>
-                <% } %>
+	<h3 style="text-align: center; color: white;">Report your morning behavior</h3>
+	<form class="form-horizontal" method="POST" action="/behavior/reporting/morning">
+		<div class="form-group slidecontainer">
+			<label for="date" class="col-sm-8 control-label">Date</label>
+			<div class="col-sm-12">
+				<input class="form-control" id="date" type="date" name="date" value="<%= date %>" />
 			</div>
 		</div>
-		<div>
-			<label for="morningMood">Generic mood</label>
-			<div id="morningMood">
-				<% for (var i = 1; i <= 5; i++) { %>
-                    <% if (morningMood === i) { %>
-                        <input type="radio" id="morningMood-<%= i %>" name="morningMood" value="<%= i %>" checked required>
-                        <label for="<%= i %>"><%= i %></label>
-                    <% } else { %>
-                        <input type="radio" id="morningMood-<%= i %>" name="morningMood" value="<%= i %>" required>
-                        <label for="<%= i %>"><%= i %></label>
-                    <% } %>
-                <% } %>
+		<div class="form-group slidecontainer">
+			<label for="sleepDuration" class="col-sm-8 control-label">Sleep duration</label>
+			<div class="col-sm-12">
+				<input class="form-control" id="sleepDuration" type="number" name="sleepDuration" value="<%= sleepDuration %>" step="0.1" min="0" required />
 			</div>
 		</div>
-		<div>
-			<% if (morning) { %>
-                <input type="submit" value="Update report!" />
-            <% } else { %>
-                <input type="submit" value="Submit report!" />
-            <% } %>
+		<div class="form-group slidecontainer">
+				<label for="sleepQuality"> Rate your sleep quality from 1 to 5</label>
+				<input type="range" id="sleepQuality" min="1" max="5" value="<% sleepQuality %>" name="sleepQuality" class="slider" id="myRange">
 		</div>
+		<div class="form-group slidecontainer">
+				<label for="morningMood"> Rate your mood from 1 to 5</label>
+				<input type="range" id="morningMood" min="1" max="5" value="<% morningMood %>" name="morningMood" class="slider" id="myRange">
+		</div>
+		<div class="col-sm-12">
+            <input class="btn btn-secondary btn-lg btn-block" type="submit" value="Submit report!" />
+		</div>
+		<br><br>
 	</form>
 </div>
 <% if (errors) { %>

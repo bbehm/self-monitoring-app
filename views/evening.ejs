@@ -1,53 +1,37 @@
 <%- include('./partials/loggedInMenu.ejs') %>
 <div style="background-color: gray; opacity: 90%;"><br/><br/>
-	<form method="POST" action="/behavior/reporting/evening">
-		<div>
-			<label for="date">Date</label>
-			<input id="date" type="date" name="date" value="<%= date %>" />
-		</div>
-		<div>
-			<label for="exerciseTime">Time spent exercising</label>
-			<input id="exerciseTime" type="number" name="exerciseTime" value="<%= exerciseTime %>" step="0.1" min="0" required />
-		</div>
-		<div>
-			<label for="studyTime">Time spent studying</label>
-			<input id="studyTime" type="number" name="studyTime" value="<%= studyTime %>" step="0.1" min="0" required />
-		</div>
-		<div>
-			<label for="eating">Quality of eating</label>
-			<div id="eating">
-				<% for (var i = 1; i <= 5; i++) { %>
-                    <% if (eating === i) { %>
-                        <input type="radio" id="eating-<%= i %>" name="eating" value="<%= i %>" checked required>
-                        <label for="<%= i %>"><%= i %></label>
-                    <% } else { %>
-                        <input type="radio" id="eating-<%= i %>" name="eating" value="<%= i %>" required>
-                        <label for="<%= i %>"><%= i %></label>
-                    <% } %>
-                <% } %>
+	<h3 style="text-align: center; color: white;">Report your evening behavior</h3>
+	<form class="form-horizontal" method="POST" action="/behavior/reporting/evening">
+		<div class="form-group slidecontainer">
+			<label for="date" class="col-sm-8 control-label">Date</label>
+			<div class="col-sm-12">
+				<input class="form-control" id="date" type="date" name="date" value="<%= date %>" />
 			</div>
 		</div>
-		<div>
-			<label for="eveningMood">Generic mood</label>
-			<div id="eveningMood">
-				<% for (var i = 1; i <= 5; i++) { %>
-                    <% if (eveningMood === i) { %>
-                        <input type="radio" id="eveningMood-<%= i %>" name="eveningMood" value="<%= i %>" checked required>
-                        <label for="<%= i %>"><%= i %></label>
-                    <% } else { %>
-                        <input type="radio" id="eveningMood-<%= i %>" name="eveningMood" value="<%= i %>" required>
-                        <label for="<%= i %>"><%= i %></label>
-                    <% } %>
-                <% } %>
+		<div class="form-group slidecontainer">
+			<label for="exerciseTime" class="col-sm-8 control-label">Time spent exercising</label>
+			<div class="col-sm-12">
+				<input class="form-control" id="exerciseTime" type="number" name="exerciseTime" value="<%= exerciseTime %>" step="0.1" min="0" required />
 			</div>
 		</div>
-		<div>
-			<% if (evening) { %>
-                <input type="submit" value="Update report!" />
-            <% } else { %>
-                <input type="submit" value="Submit report!" />
-            <% } %>
+		<div class="form-group slidecontainer">
+			<label for="studyTime" class="col-sm-8 control-label">Time spent studying</label>
+			<div class="col-sm-12">
+				<input class="form-control" id="studyTime" type="number" name="studyTime" value="<%= studyTime %>" step="0.1" min="0" required />
+			</div>
 		</div>
+		<div class="form-group slidecontainer">
+			<label for="eating"> Rate your eating quality from 1 to 5</label>
+			<input type="range" id="eating" min="1" max="5" value="<% eating %>" name="eating" class="slider" id="myRange">
+		</div>
+		<div class="form-group slidecontainer">
+			<label for="eveningMood"> Rate your mood from 1 to 5</label>
+			<input type="range" id="eveningMood" min="1" max="5" value="<% eveningMood %>" name="eveningMood" class="slider" id="myRange">
+		</div>	
+		<div class="col-sm-12">
+            <input class="btn btn-secondary btn-lg btn-block" type="submit" value="Submit report!" />
+		</div>
+		<br><br>
 	</form>
 </div>
 <% if (errors) { %>

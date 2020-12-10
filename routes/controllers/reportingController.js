@@ -93,7 +93,7 @@ const postMorning = async({session, request, response, render}) => {
 	} else {
 		await addMorningReport(data);
 	}
-	response.redirect('./behavior/reporting');
+	response.redirect('/behavior/reporting');
 }
 
 const reportEvening = async({session, render}) => {
@@ -149,7 +149,7 @@ const postEvening = async({session, request, response, render}) => {
 	} else {
 		await addEveningReport(data);
 	}
-	response.redirect('./behavior/reporting');
+	response.redirect('/behavior/reporting');
 }
 
 export { homePage, reportMorning, reportEvening, postMorning, postEvening };

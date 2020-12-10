@@ -1,7 +1,7 @@
 <%- include('./partials/loggedInMenu.ejs') , {user: user} %>
-<div style="background-color: gray; opacity: 90%;"><br/><br/>
+<div><br/><br/>
 <div class="d-flex justify-content-center">
-<h3>Today's reporting<small class="text-light"> Remember to track today's behavior!</small></h3>
+    <h3>Today's reporting</h3>
 </div>
 <div class="mx-auto" style="width: 70%;">
     <a class="btn btn-secondary btn-lg btn-block" href="/behavior/reporting/morning">
@@ -18,41 +18,40 @@
     </a>
 </div>
 <br>
-<div class="d-flex justify-content-center">
-    <h3>Your average mood lately<small class="text-light"> How have you been feeling?</small></h3>
-</div>
-    <div class="mx-auto" style="width: 70%;">
-        <h5 class="mt-4" style="text-align: center;">Your mood today: <span style="color: lightgray"><%= moodToday %></span></h5>
-        <h5 style="text-align: center;">Your mood yesterday: <span style="color: lightgray"><%= moodYesterday %></span></h5>
-    </div>
+<div class="mx-auto" id="info-div">
+    <h2>Your average mood lately</h2>
+    <h5 class="mt-4" style="text-align: center;">Your mood today: <%= moodToday %> / 5</h5>
+    <h5 style="text-align: center;">Your mood yesterday: <%= moodYesterday %> / 5</h5>
     <br>
-    <div class="d-flex justify-content-center">
         <% if( moodToday > moodYesterday ) { %> 
-            <h2>👍</h2>
+            <h4>👍 This trend looks good 👍 </h4>
         <% } else if (moodToday < moodYesterday) { %> 
-            <h2>😞</h2>
+            <h4>😞 This trend doesn't look good 😞</h4>
         <% } else { %>
-            <p>😊</h2>
+            <h4>😊 This looks stable 😊</h4>
         <% } %>
-    </div>
-<br>
-<div class="d-flex justify-content-center">
-    <h3>Community averages<small class="text-light"> Check out how the rest of the community is doing!</small></h3>
-</div>
-<div class="mx-auto" style="width: 70%;">
-    <h5 class="mt-4" style="text-align: center;">Community average mood today: <span style="color: lightgray"><%= communityMoodToday %></span></h5>
-    <h5 style="text-align: center;">Community average mood yesterday: <span style="color: lightgray"><%= communityMoodYesterday %></span></h5>
 </div>
 <br>
-<div class="d-flex justify-content-center">
+<div class="mx-auto" id="info-div">
+    <h2>How is the community doing?</h2>
+    <h5 class="mt-4" style="text-align: center;">Community mood today: <%= communityMoodToday %> / 5</h5>
+    <h5 style="text-align: center;">Community mood yesterday: <%= communityMoodYesterday %> / 5</h5>
+<br>
     <% if( communityMoodToday > communityMoodYesterday ) { %> 
-        <h2>👍</h2>
+        <h4>👍 This trend looks good 👍 </h4>
     <% } else if (communityMoodToday < communityMoodYesterday) { %> 
-        <h2>😞</h2>
+        <h4>😞 This trend doesn't look good 😞</h4>
     <% } else { %>
-        <p>😊</h2>
+        <h4>😊 This looks stable 😊</h4>
     <% } %>
 </div>
 <br>
+<div class="d-flex justify-content-center">
+    <h3>Need to catch up on reporting?</h3>
+</div>
+<div class="mx-auto" style="width: 70%;">
+    <a class="btn btn-secondary btn-lg btn-block" href="/behavior/reporting/morning">Make a morning report</a>
+    <a class="btn btn-secondary btn-lg btn-block" href="/behavior/reporting/evening">Make an evening report</a>
+</div>
 </div>
 <%- include('./partials/footer.ejs') %>

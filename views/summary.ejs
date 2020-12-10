@@ -1,9 +1,9 @@
 <%- include('./partials/loggedInMenu.ejs') %>
-<div style="background-color: gray; opacity: 90%;"><br/><br/>
-	<div>
-		<h3 style="text-align: center; color: white;">Here's a summary of your behavior</h3><br>
+<div><br/>
+	<h3 style="text-align: center;">☀️ Here's a summary of your behavior ☀️</h3>
+	<div class="mx-auto background-div">
 		<div class="mx-auto" style="width: 50%;">
-			<h3 style="text-align: center; color: #2E3338;">Monthly Average</h3><br>
+			<h2>Monthly Average</h2><br>
 		<form class="form-horizontal" method="POST" action="/behavior/summary/month">
 			<div class="form-group d-flex">
 				<div class="col-sm-8">
@@ -17,8 +17,7 @@
 	</div>
 		<div class="mx-auto" style="width: 79%;">
 		<% if (monthData.length > 0) { %>
-		<h6 style="text-align: center; color: white;">Showing data for month <%= monthData[0].month %></h6>
-		<table class="table">
+		<table class="table table-dark table-hover">
 			<thead><tr>
 				<th>Sleep Quality</th>
 				<th>Sleep Duration</th>
@@ -34,15 +33,16 @@
 				<td><%= monthData[0].moodavg %>/5.00</td>
 			</tr></tbody>
 		</table>
+		<h6 style="text-align: center; color: white;">Showing data for month <%= monthData[0].month %></h6>
 		<% } else { %>
 			<h6 style="text-align: center;">No data for month <%= month %> yet 😞 </h6>
 		<% }; %>
 		</div>
 	</div>
 	<br>
-	<div>
+	<div class="mx-auto background-div">
 		<div class="mx-auto" style="width: 50%;">
-			<h3 style="text-align: center; color: #2E3338;">Weekly Average</h3><br>
+			<h2>Weekly Average</h2><br>
 		<form class="form-horizontal" method="POST" action="/behavior/summary/week">
 			<div class="form-group d-flex">
 				<div class="col-sm-8">
@@ -56,8 +56,7 @@
 		</div>
 		<div class="mx-auto" style="width: 79%;">
 		<% if (weekData.length > 0) { %>
-		<h6 style="text-align: center; color: white;">Showing data for week <%= week %></h6>
-		<table class="table">
+		<table class="table table-dark table-hover">
 			<thead><tr>
 				<th>Sleep Quality</th>
 				<th>Sleep Duration</th>
@@ -73,6 +72,7 @@
 				<td><%= weekData[0].moodavg %>/5.00</td>
 			</tr></tbody>
 		</table>
+		<h6 style="text-align: center; color: white;">Showing data for week <%= week %></h6>
 		<% } else { %>
 			<h6>No data for week <%= week %> yet 😞 </h6>
 		<% }; %>

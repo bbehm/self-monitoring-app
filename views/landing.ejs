@@ -6,4 +6,22 @@
 	<form method="get" action="/auth/login"><input class="btn btn-secondary btn-lg btn-block" type="submit" value="Login"></input></form><br>
 	<form method="get" action="/auth/registration"><input class="btn btn-secondary btn-lg btn-block" type="submit" value="Register"></input></form>
 </div>
+<br>
+<div class="mx-auto" id="info-div">
+	<h4>Join our community of self monitors! 💪</h4>
+	<p>With this simple app you can track you behavior in areas like sleeping, exercising, eating and studying - The reporting feature reminds you to report your behavior each morning and evening and the summary feature allows you to get an overlook of your tracked behaviors.</p>
+</div>
+<br>
+<div class="mx-auto" id="info-div">
+    <h5 class="mt-4">Community mood today: <%= communityMoodToday %> / 5</h5>
+    <h5>Community mood yesterday: <%= communityMoodYesterday %> / 5</h5>
+<br>
+    <% if( communityMoodToday > communityMoodYesterday ) { %> 
+        <h2>👍 This trend looks good 👍 </h2>
+    <% } else if (communityMoodToday < communityMoodYesterday) { %> 
+        <h2>😞 This trend doesn't look good 😞</h2>
+    <% } else { %>
+        <h2>😊 This looks stable 😊</h2>
+    <% } %>
+</div>
 <%- include ('./partials/footer.ejs') %>

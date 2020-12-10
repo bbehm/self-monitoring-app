@@ -3,10 +3,6 @@ import { validateMorning, validateEvening } from '../../middlewares/validations.
 
 const homePage = async({ session, render, response }) => {
 	const user = await session.get('user');
-	if (!user) {
-		// this check should be fixed to work better
-		response.redirect('/login');
-	}
 	const day = new Date();
 	const yesterday = new Date(day - 86400000);
 	const formatDate = day.toISOString().substring(0,10);
@@ -46,7 +42,6 @@ const homePage = async({ session, render, response }) => {
 
 const reportMorning = async({session, render}) => {
 	const user = await session.get('user');
-	// add logged in check
 	const day = new Date();
 	const formatDate = day.toISOString().substring(0,10);
 	const dailyReport = await getDailyReport(formatDate, user.id);
@@ -79,7 +74,6 @@ const reportMorning = async({session, render}) => {
 
 const postMorning = async({session, request, response, render}) => {
 	const data = await validateMorning(request);
-	// check that logged in
 	const user = await session.get('user');
 	data.id = user.id;
 	if (data.errors) {
@@ -104,7 +98,6 @@ const postMorning = async({session, request, response, render}) => {
 
 const reportEvening = async({session, render}) => {
 	const user = await session.get('user');
-	// add logged in check
 	const day = new Date();
 	const formatDate = day.toISOString().substring(0,10);
 	const dailyReport = await getDailyReport(formatDate, user.id);
@@ -139,7 +132,6 @@ const reportEvening = async({session, render}) => {
 const postEvening = async({session, request, response, render}) => {
 	const data = await validateEvening(request);
 	const user = await session.get('user');
-	// check that users logged on
 	data.id = user.id;
 	if (data.errors) {
 		data.user = user;

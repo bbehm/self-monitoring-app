@@ -13,7 +13,7 @@ app.use(session.use()(session));
 app.use(middleware.errorMiddleware);
 app.use(middleware.requestTimingMiddleware);
 app.use(middleware.serveStaticFilesMiddleware);
-//app.use(middleware.checkIfAuthNeededMiddleware);
+app.use(middleware.authMiddleware);
 
 const ejsEngine = engineFactory.getEjsEngine();
 const oakAdapter = adapterFactory.getOakAdapter();

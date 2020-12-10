@@ -28,4 +28,18 @@ const serveStaticFilesMiddleware = async(context, next) => {
   }
 }
 
-export { errorMiddleware, requestTimingMiddleware, serveStaticFilesMiddleware };
+const authMiddleware = async({request, response, session}, next) => {
+  const url = request.url.pathname;
+  if (url.startsWith('/auth') || url.startsWith('/api') || url === ('/')) {
+    await next();
+  } else {
+    const user = await session.get('user');
+    if (!user) {
+      response.redirect('/auth/login');
+    } else {
+      await next();
+    }
+  }
+}
+
+export { errorMiddleware, requestTimingMiddleware, serveStaticFilesMiddleware, authMiddleware };

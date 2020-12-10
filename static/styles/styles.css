@@ -1,3 +1,7 @@
 body {
 	background-color: #2E3338;
 }
+
+label {
+	color: white;
+}

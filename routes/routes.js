@@ -7,10 +7,10 @@ import { summaryPage, changeWeekView, changeMonthView } from './controllers/summ
 const router = new Router();
 
 router.get('/', landingPage);
-router.get('/login', loginPage);
+router.get('/auth/login', loginPage);
 router.post('/auth/login', postLoginPage);
-router.get('/register', registerPage);
-router.post('/auth/register', postRegisterPage);
+router.get('/auth/registration', registerPage);
+router.post('/auth/registration', postRegisterPage);
 router.post('/auth/logout', logOut);
 
 router.get('/user/reporting', homePage);

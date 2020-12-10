@@ -13,6 +13,33 @@ const eveningRules = {
 	eating: [required, isNumber, numberBetween(1,5)]
 }
 
+const registrationRules = {
+	email: [required, isEmail],
+	password: [required, minLength(4)],
+	verification: [required]
+};
+
+const validateRegistration = async(request) => {
+	const data = {
+		email: '',
+		password: '',
+		verification: '',
+		errors: {}
+	};
+	if (request) {
+		const body = request.body();
+		const params = await body.value;
+		data.email = params.get('email');
+		data.password = params.get('password');
+		data.verification = params.get('verification');
+	}
+	const [passes, errors] = await validate(data, registrationRules);
+	if (!passes) {
+		data.errors = errors;
+	}
+	return data;
+}
+
 const validateMorning = async(request) => {
 	const data = {
 		date: '',
@@ -59,4 +86,4 @@ const validateEvening = async(request) => {
 	return data;
 }
 
-export { validateMorning, validateEvening };
+export { validateMorning, validateEvening, validateRegistration };

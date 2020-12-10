@@ -1,5 +1,6 @@
 import { addUser, getUserFromEmail } from "../../services/authServices.js";
 import { bcrypt } from "../../deps.js";
+import { validateRegistration } from "../../middlewares/validations.js";
 
 const loginPage = async({render}) => {
 	render('login.ejs');
@@ -34,38 +35,41 @@ const postLoginPage = async({request, response, session}) => {
 }
 
 const registerPage = async({render}) => {
-	render('register.ejs');
+	const data = {
+		errors: [],
+		email: ''
+	};
+	render('register.ejs', data);
 }
 
-const postRegisterPage = async({request, response}) => {
-	const body = request.body();
-	const params = await body.value;
-	
-	const email = params.get('email');
-	const password = params.get('password');
-	const verification = params.get('verification');
-  
-	if (password !== verification) {
-	  response.body = 'The entered passwords did not match';
-	  return;
-	}
-  
+const postRegisterPage = async({request, response, render}) => {
+	const data = await validateRegistration(request);
+	const email = data.email;
+	const password = data.password;
+	const verification = data.verification;
 	const existingUsers = await getUserFromEmail(email);
 	if (existingUsers.rowCount > 0) {
-	  response.body = 'The email is already reserved.';
-	  return;
+		data.errors['email'] = { required: "The email is already in use" };
 	}
-  
+	if (password !== verification) {
+		data.errors['matching'] = { required: "The entered passwords did not match" };
+	}
+	console.log(data.errors);
+	if (data.errors) {
+		render('register.ejs', data);
+		return;
+	}
+
 	const hash = await bcrypt.hash(password);
 	addUser(email, hash);
 	response.body = 'Registration successful!';
-	response.redirect('/login');
+	response.redirect('/auth/login');
 }
 
 const logOut = async({response, session}) => {
 	await session.set('user', undefined);
 	await session.set('authenticated', undefined);
-	response.redirect('/login');
+	response.redirect('/auth/login');
 }
 
 export{ loginPage, postLoginPage, registerPage, postRegisterPage, logOut };

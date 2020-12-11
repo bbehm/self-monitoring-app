@@ -5,6 +5,9 @@ A web app for self monitoring created as a final project for a course in Web Sof
 - To add your __database credentials__: add a `.env` file with your credentials
 - To __run__: `deno run --allow-env --allow-net --allow-read --allow-write --unstable app.js`
 - To run in test mode: `deno test --allow-env --allow-read --allow-net --unstable`
+
+More detailed documentation on the app and usage can be found [here](https://github.com/bbehm/self-monitoring-app/blob/main/documentation/guidelines.md).
+
 ---
 
 

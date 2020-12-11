@@ -11,6 +11,7 @@ A demo of my project can be found here: [Demo on Heroku](https://self-monitoring
 hostname=db-hostname
 database=db-name
 user=username
+password=password
 port=5432
 ```
 

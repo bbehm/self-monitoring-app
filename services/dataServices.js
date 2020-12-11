@@ -9,9 +9,10 @@ const getDailyReport = async(date, id) => {
 }
 
 const getCommunityDailyReport = async(date) => {
-	const res = await executeQuery("SELECT * FROM user_reports WHERE date=$1;", date);
+	console.log(date);
+	const res = await executeQuery("SELECT DISTINCT date, AVG(sleepduration) AS sleepduration_avg, ROUND((AVG(sleepquality)), 2) AS sleepquality_avg, AVG(exercisetime) AS exercisetime_avg, AVG(studytime) AS studytime_avg, AVG(eating) AS eating_avg, ROUND(AVG(morning), 2) AS morning, ROUND(AVG(evening), 2) AS evening FROM user_reports WHERE date=$1 GROUP BY date;", date);
 	if(res && res.rowCount > 0) {
-		return res.rowsOfObjects()[0];
+		return res.rowsOfObjects();
 	}
 	return ;
 }

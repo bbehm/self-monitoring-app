@@ -8,7 +8,7 @@ const apiWeekSummary = async({response}) => {
 	const start = today.toISOString().substring(0,10);
 	const data = await getOneWeek(start, end);
 	if (data) {
-		response.body = data[0];
+		response.body = data;
 		response.status = 200;
 	} else {
 		response.body = 'No data found for the past week';
@@ -21,7 +21,7 @@ const apiDaySummary = async({response, params}) => {
 	const day = checkWeek(params.day);
 	const formatDate = `${params.year}-${month}-${day}`;
 	const data = await getSpecificDay(formatDate);
-	if (data && Array.isArray(data)) {
+	if (data && Array.isArray(data) && data[0].mood_avg != null) {
 		response.body = data;
 		response.status = 200;
 	} else {

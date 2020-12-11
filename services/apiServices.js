@@ -1,7 +1,7 @@
 import { executeQuery } from "../database/database.js";
 
 const getSpecificDay = async(date) => {
-	const query = "SELECT DISTINCT date, AVG(sleepduration) AS sleepduration_avg, ROUND((AVG(sleepquality)), 2) AS sleepquality_avg, AVG(exercisetime) AS exercisetime_avg, AVG(studytime) AS studytime_avg, AVG(eating) AS eating_avg, ROUND(AVG((morning+evening)/2), 2) AS mood_avg FROM user_reports WHERE date=$1 GROUP BY date;";
+	const query = "SELECT ROUND(AVG(sleepduration)::numeric, 2) AS sleepduration_avg, ROUND((AVG(sleepquality)), 2) AS sleepquality_avg, ROUND(AVG(exercisetime)::numeric, 2) AS exercisetime_avg, ROUND(AVG(studytime)::numeric, 2) AS studytime_avg, ROUND(AVG(eating)::numeric, 2) AS eating_avg, ROUND(AVG((morning+evening)/2), 2) AS mood_avg FROM user_reports WHERE date=$1;";
 	const res = await executeQuery(query, date);
 	if (res && res.rowCount > 0) {
 		return res.rowsOfObjects();
@@ -12,7 +12,7 @@ const getSpecificDay = async(date) => {
 }
 
 const getOneWeek = async(start, end) => {
-	const query = "SELECT DISTINCT (date >= $1 AND date <= $2) AS week, AVG(sleepduration) AS sleepduration_avg, ROUND((AVG(sleepquality)), 2) AS sleepquality_avg, AVG(exercisetime) AS exercisetime_avg, AVG(studytime) AS studytime_avg, AVG(eating) AS eating_avg, ROUND(AVG((morning+evening)/2), 2) AS mood_avg FROM user_reports WHERE date >= $1 AND date <= $2 GROUP BY week;";
+	const query = "SELECT ROUND(AVG(sleepduration)::numeric, 2) AS sleepduration_avg, ROUND((AVG(sleepquality)), 2) AS sleepquality_avg, ROUND(AVG(exercisetime)::numeric, 2) AS exercisetime_avg, ROUND(AVG(studytime)::numeric, 2) AS studytime_avg, ROUND(AVG(eating)::numeric, 2) AS eating_avg, ROUND(AVG((morning+evening)/2), 2) AS mood_avg FROM user_reports WHERE date >= $1 AND date <= $2;";
 	const res = await executeQuery(query, start, end);
 	if (res && res.rowCount > 0) {
 		return res.rowsOfObjects();

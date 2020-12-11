@@ -8,28 +8,28 @@ const landingPage = async({render}) => {
 	const communityDailyReport = await getCommunityDailyReport(formatDate);
 	const communityYesterdayReport = await getCommunityDailyReport(formatYesterday);
 	const data = {
-		communityMorning: communityDailyReport && communityDailyReport.morning,
-		communityEvening: communityDailyReport && communityDailyReport.evening
+		communityMorning: communityDailyReport[0] && communityDailyReport[0].morning,
+		communityEvening: communityDailyReport[0] && communityDailyReport[0].evening
 	};
 	const yesterdayData = {
-		communityMorning: communityYesterdayReport && communityYesterdayReport.morning,
-		communityEvening: communityYesterdayReport && communityYesterdayReport.evening
+		communityMorning: communityYesterdayReport[0] && communityYesterdayReport[0].morning,
+		communityEvening: communityYesterdayReport[0] && communityYesterdayReport[0].evening
 	};
 	if (data.communityMorning && data.communityEvening) {
-		data.communityMoodToday = (Number(communityDailyReport.morning + communityDailyReport.evening) / 2);
+		data.communityMoodToday = ((Number(communityDailyReport[0].morning) + Number(communityDailyReport[0].evening)) / 2);
 	} else if (data.communityMorning) {
-		data.communityMoodToday = Number(communityDailyReport.morning);
+		data.communityMoodToday = Number(communityDailyReport[0].morning);
 	} else if (data.communityEvening) {
-		data.communityMoodToday = Number(communityDailyReport.evening);
+		data.communityMoodToday = Number(communityDailyReport[0].evening);
 	} else {
 		data.communityMoodToday = 'No reported mood for today';
 	}
 	if (yesterdayData.communityMorning && yesterdayData.communityEvening) {
-		data.communityMoodYesterday = (Number(communityYesterdayReport.morning + communityYesterdayReport.evening) / 2);
+		data.communityMoodYesterday = ((Number(communityYesterdayReport[0].morning) + Number(communityYesterdayReport[0].evening)) / 2);
 	} else if (yesterdayData.communityMorning) {
-		data.communityMoodYesterday = Number(communityYesterdayReport.morning);
+		data.communityMoodYesterday = Number(communityYesterdayReport[0].morning);
 	} else if (yesterdayData.communityEvening) {
-		data.communityMoodYesterday = Number(communityYesterdayReport.evening);
+		data.communityMoodYesterday = Number(communityYesterdayReport[0].evening);
 	} else {
 		data.communityMoodYesterday = 'No reported mood for yesterday';
 	}

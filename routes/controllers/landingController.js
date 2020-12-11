@@ -7,6 +7,14 @@ const landingPage = async({render}) => {
 	const formatYesterday = yesterday.toISOString().substring(0,10);
 	const communityDailyReport = await getCommunityDailyReport(formatDate);
 	const communityYesterdayReport = await getCommunityDailyReport(formatYesterday);
+	if (communityDailyReport == undefined || communityYesterdayReport == undefined) {
+		const data = {
+			communityMoodToday: 'No reported mood for today',
+			communityMoodYesterday: 'No reported mood for yesterday'
+		};
+		render('landing.ejs', data);
+		return ;
+	}
 	const data = {
 		communityMorning: communityDailyReport[0] && communityDailyReport[0].morning,
 		communityEvening: communityDailyReport[0] && communityDailyReport[0].evening

@@ -11,6 +11,37 @@ const homePage = async({ session, render, response }) => {
 	const yesterdayReport = await getDailyReport(formatYesterday, user.id);
 	const communityDailyReport = await getCommunityDailyReport(formatDate);
 	const communityYesterdayReport = await getCommunityDailyReport(formatYesterday);
+	if (communityDailyReport == undefined || communityYesterdayReport == undefined) {
+		const data = {
+			user: user,
+			morning: dailyReport && dailyReport.morning,
+			evening: dailyReport && dailyReport.evening,
+			yesterdayMorning: yesterdayReport && yesterdayReport.morning,
+			yesterdayEvening: yesterdayReport && yesterdayReport.evening,
+			communityMoodToday: 'No reported mood for today',
+			communityMoodYesterday: 'No reported mood for yesterday',
+		};
+		if (data.morning && data.evening) {
+			data.moodToday = (Number(dailyReport.morning + dailyReport.evening) / 2);
+		} else if (data.morning) {
+			data.moodToday = Number(dailyReport.morning);
+		} else if (data.evening) {
+			data.moodToday = Number(dailyReport.evening);
+		} else {
+			data.moodToday = 'No reported mood for today';
+		}
+		if (data.yesterdayMorning && data.yesterdayEvening) {
+			data.moodYesterday = (Number(yesterdayReport.morning + yesterdayReport.evening) / 2);
+		} else if (data.yesterdayMorning) {
+			data.moodYesterday = Number(yesterdayReport.morning);
+		} else if (data.yesterdayEvening) {
+			data.moodYesterday = Number(yesterdayReport.evening);
+		} else {
+			data.moodYesterday = 'No reported mood for yesterday';
+		}
+		render('home.ejs', data);
+		return ;
+	}
 	const data = {
 		user: user,
 		morning: dailyReport && dailyReport.morning,

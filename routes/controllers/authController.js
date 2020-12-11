@@ -69,9 +69,9 @@ const postRegisterPage = async({request, response, render}) => {
 	if (password !== verification) {
 		data.errors['matching'] = { required: "The entered passwords did not match" };
 	}
-	console.log(data.errors);
 	if (data.errors) {
 		render('register.ejs', data);
+		response.status = 401;
 		return;
 	}
 

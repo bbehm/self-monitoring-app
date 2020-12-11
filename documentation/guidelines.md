@@ -37,7 +37,9 @@ __Reporting and Summary__
 
 My app requires both morning and evening reports to be done in order to show the summary statistics correctly. In other words, if only for example morning data is given, the summary will return empty fields for the evening data.
 
-The default values for the summary view is the last completed month and week. Also, when the week is changed, the month view will update accordingly. 
+The default values for the summary view is the last completed month and week. Also, when the week is changed, the month view will update accordingly.
+
+For the community mood today vs yesterday to work properly, at least one report per day is needed.
 
 __API__
 

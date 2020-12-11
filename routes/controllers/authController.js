@@ -69,12 +69,11 @@ const postRegisterPage = async({request, response, render}) => {
 	if (password !== verification) {
 		data.errors['matching'] = { required: "The entered passwords did not match" };
 	}
-	if (data.errors) {
+	if (data.errors.rowCount > 0) {
 		render('register.ejs', data);
 		response.status = 401;
 		return;
 	}
-
 	const hash = await bcrypt.hash(password);
 	addUser(email, hash);
 	response.body = 'Registration successful!';

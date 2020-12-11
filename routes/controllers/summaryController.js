@@ -1,5 +1,5 @@
 import { averageWeek, averageMonth } from '../../services/summaryServices.js';
-import { weekNumber, getTheDate, checkWeek, checkMonth } from '../../utils/helpers.js';
+import { weekNumber, getTheDate, checkWeek, checkMonth } from '../../utils/dateFormatting.js';
 
 const summaryPage = async({session, render}) => {
 	const user = await session.get('user');

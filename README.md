@@ -8,6 +8,13 @@ A web app for self monitoring created as a final project for a course in Web Sof
 
 More detailed documentation on the app and usage can be found [here](https://github.com/bbehm/self-monitoring-app/blob/main/documentation/guidelines.md).
 
+### API
+
+API endpoints can be found at
+`/api/summary` and `api/summary/:year/:month/:day` for example https://self-monitoring.herokuapp.com/api/summary/2020/12/14.
+
+The API provides summary data for all users on the platform.
+
 ---
 
 
